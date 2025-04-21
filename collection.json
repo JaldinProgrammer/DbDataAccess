@@ -1,0 +1,133 @@
+{
+    "info": {
+      "name": "DB dataaccess API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "v1 Users",
+        "item": [
+          {
+            "name": "List Users",
+            "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/users" }
+          },
+          {
+            "name": "Get User by ID",
+            "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/users/:id" }
+          },
+          {
+            "name": "Create User",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"name\": \"John Doe\", \"email\": \"john@example.com\" }" },
+              "url": "http://localhost:3000/api/v1/users"
+            }
+          },
+          {
+            "name": "Update User",
+            "request": {
+              "method": "PUT",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"name\": \"Jane Doe\" }" },
+              "url": "http://localhost:3000/api/v1/users/:id"
+            }
+          },
+          {
+            "name": "Delete User",
+            "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v1/users/:id" }
+          }
+        ]
+      },
+      {
+        "name": "v1 Posts",
+        "item": [
+          { "name": "List Posts", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/posts" } },
+          { "name": "Get Post by ID", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/posts/:id" } },
+          {
+            "name": "Create Post",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"title\": \"Sample Post\", \"content\": \"Hello world\", \"authorId\": 1, \"tagIds\": [1,2] }" },
+              "url": "http://localhost:3000/api/v1/posts"
+            }
+          },
+          { "name": "Update Post", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"title\": \"Updated Title\" }" }, "url": "http://localhost:3000/api/v1/posts/:id" } },
+          { "name": "Delete Post", "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v1/posts/:id" } }
+        ]
+      },
+      {
+        "name": "v1 Tags",
+        "item": [
+          { "name": "List Tags", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/tags" } },
+          { "name": "Get Tag by ID", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v1/tags/:id" } },
+          {
+            "name": "Create Tag",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"name\": \"tag1\" }" },
+              "url": "http://localhost:3000/api/v1/tags"
+            }
+          },
+          { "name": "Update Tag", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"name\": \"updated tag\" }" }, "url": "http://localhost:3000/api/v1/tags/:id" } },
+          { "name": "Delete Tag", "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v1/tags/:id" } }
+        ]
+      },
+      {
+        "name": "v2 Users",
+        "item": [
+          { "name": "List Users", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/users" } },
+          { "name": "Get User by ID", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/users/:id" } },
+          {
+            "name": "Create User",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"name\": \"John Doe\", \"email\": \"john@example.com\" }" },
+              "url": "http://localhost:3000/api/v2/users"
+            }
+          },
+          { "name": "Update User", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"name\": \"Jane Doe\" }" }, "url": "http://localhost:3000/api/v2/users/:id" } },
+          { "name": "Delete User", "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v2/users/:id" } }
+        ]
+      },
+      {
+        "name": "v2 Posts",
+        "item": [
+          { "name": "List Posts", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/posts" } },
+          { "name": "Get Post by ID", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/posts/:id" } },
+          {
+            "name": "Create Post",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"title\": \"Sample Post\", \"content\": \"Hello world\", \"authorId\": 1, \"tagIds\": [1,2] }" },
+              "url": "http://localhost:3000/api/v2/posts"
+            }
+          },
+          { "name": "Update Post", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"title\": \"Updated Title\" }" }, "url": "http://localhost:3000/api/v2/posts/:id" } },
+          { "name": "Delete Post", "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v2/posts/:id" } }
+        ]
+      },
+      {
+        "name": "v2 Tags",
+        "item": [
+          { "name": "List Tags", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/tags" } },
+          { "name": "Get Tag by ID", "request": { "method": "GET", "header": [], "url": "http://localhost:3000/api/v2/tags/:id" } },
+          {
+            "name": "Create Tag",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{ \"name\": \"tag1\" }" },
+              "url": "http://localhost:3000/api/v2/tags"
+            }
+          },
+          { "name": "Update Tag", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"name\": \"updated tag\" }" }, "url": "http://localhost:3000/api/v2/tags/:id" } },
+          { "name": "Delete Tag", "request": { "method": "DELETE", "header": [], "url": "http://localhost:3000/api/v2/tags/:id" } }
+        ]
+      }
+    ]
+  }
