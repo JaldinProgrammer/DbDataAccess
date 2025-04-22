@@ -10,6 +10,35 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+export const getAllUsersWithCountPost = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      include: {
+        _count: {
+          select: { posts: true }
+        }
+      },
+      orderBy: {
+        posts: {
+          _count: 'desc'
+        }
+      }
+    });
+
+    // If you prefer a flat `postCount` field:
+    const result = users.map(u => ({
+      id:        u.id,
+      name:      u.name,
+      email:     u.email,
+      postCount: u._count.posts
+    }));
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const getUserById = async (req, res) => {
   const id = Number(req.params.id);
   try {
