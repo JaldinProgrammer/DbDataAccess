@@ -25,7 +25,6 @@ export const getAllUsersWithCountPost = async (req, res) => {
       }
     });
 
-    // If you prefer a flat `postCount` field:
     const result = users.map(u => ({
       id:        u.id,
       name:      u.name,
