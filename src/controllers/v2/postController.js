@@ -1,71 +1,85 @@
-import { PrismaClient } from '@prisma/client';
+import pool from '../../database/straightConnection.js';
 
-const prisma = new PrismaClient();
-
+// GET /api/v2/posts — list all posts
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await prisma.post.findMany({ include: { author: true, tags: true } });
-    res.json(posts);
+    const { rows } = await pool.query(
+      'SELECT * FROM "Post" ORDER BY id'
+    );
+    res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch posts' });
   }
 };
 
+// GET /api/v2/posts/:id — get one post
 export const getPostById = async (req, res) => {
   const id = Number(req.params.id);
   try {
-    const post = await prisma.post.findUnique({ where: { id }, include: { author: true, tags: true } });
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    res.json(post);
+    const { rows } = await pool.query(
+      'SELECT * FROM "Post" WHERE id = $1',
+      [id]
+    );
+    if (rows.length === 0) 
+      return res.status(404).json({ error: 'Not found' });
+    res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch post' });
   }
 };
 
+// POST /api/v2/posts — create a post
 export const createPost = async (req, res) => {
-  const { title, content, authorId, tagIds } = req.body;
+  const { title, content, authorId } = req.body;
   try {
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        author: authorId ? { connect: { id: Number(authorId) } } : undefined,
-        tags: tagIds ? { connect: tagIds.map(id => ({ id: Number(id) })) } : undefined
-      },
-      include: { author: true, tags: true }
-    });
-    res.status(201).json(post);
+    const { rows } = await pool.query(
+      `INSERT INTO "Post"(title, content, "authorId") 
+       VALUES($1, $2, $3) RETURNING *`,
+      [title, content || null, authorId || null]
+    );
+    res.status(201).json(rows[0]);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(400).json({ error: 'Failed to create post' });
   }
 };
 
+// PUT /api/v2/posts/:id — update a post
 export const updatePost = async (req, res) => {
   const id = Number(req.params.id);
-  const { title, content, authorId, tagIds } = req.body;
+  const { title, content, authorId } = req.body;
   try {
-    const post = await prisma.post.update({
-      where: { id },
-      data: {
-        title,
-        content,
-        author: authorId ? { connect: { id: Number(authorId) } } : { disconnect: true },
-        tags: tagIds ? { set: tagIds.map(id => ({ id: Number(id) })) } : undefined
-      },
-      include: { author: true, tags: true }
-    });
-    res.json(post);
+    const { rows } = await pool.query(
+      `UPDATE "Post" 
+       SET title = $1, content = $2, "authorId" = $3 
+       WHERE id = $4 
+       RETURNING *`,
+      [title, content || null, authorId || null, id]
+    );
+    if (rows.length === 0) 
+      return res.status(404).json({ error: 'Not found' });
+    res.json(rows[0]);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(400).json({ error: 'Failed to update post' });
   }
 };
 
+// DELETE /api/v2/posts/:id — delete a post
 export const deletePost = async (req, res) => {
   const id = Number(req.params.id);
   try {
-    await prisma.post.delete({ where: { id } });
+    const result = await pool.query(
+      'DELETE FROM "Post" WHERE id = $1',
+      [id]
+    );
+    if (result.rowCount === 0) 
+      return res.status(404).json({ error: 'Not found' });
     res.status(204).send();
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(400).json({ error: 'Failed to delete post' });
   }
 };

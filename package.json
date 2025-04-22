@@ -1,6 +1,9 @@
 {
   "name": "db_dataaccess",
   "version": "1.0.0",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "type": "module",
   "description": "This project aims to compare the performance of different database access methods in Node.js applications. It will include a REST API built with Express and Prisma ORM, and will be tested using Autocannon for performance benchmarking.",
   "main": "src/index.js",
@@ -20,6 +23,7 @@
     "pg": "^8.14.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "autocannon": "^8.0.0",
     "nodemon": "^3.1.9",
     "prisma": "^6.6.0"
